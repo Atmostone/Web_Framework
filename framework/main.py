@@ -1,6 +1,6 @@
 from wsgiref.util import setup_testing_defaults
 
-from framework.views import not_found_404_view
+from framework.views import Error404
 
 
 class Application:
@@ -10,7 +10,6 @@ class Application:
 
     def __call__(self, environ, start_response):
         setup_testing_defaults(environ)
-        print('work')
         path = environ['PATH_INFO']
 
         if not path.endswith('/'):
@@ -19,7 +18,7 @@ class Application:
         if path in self.urls:
             view = self.urls[path]
         else:
-            view = not_found_404_view
+            view = Error404()
         request = {}
         for controller in self.middleware:
             controller(request)
