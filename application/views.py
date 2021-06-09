@@ -1,10 +1,18 @@
+import os
+import pathlib
+
+from framework.templater import render
+
+
 class IndexView:
     def __call__(self, request):
         print(request)
-        return '200 OK', [b'<h1>Hello world!</h1>']
+        path = os.path.join(pathlib.Path(__file__).parent.absolute(), 'templates/index.html')
+        return '200 OK', [render(path).encode('utf-8')]
 
 
 class AboutView:
     def __call__(self, request):
         print(request)
-        return '200 OK', [b'<h2>It is my own framework!</h2>']
+        path = os.path.join(pathlib.Path(__file__).parent.absolute(), 'templates/about.html')
+        return '200 OK', [render(path).encode('utf-8')]
