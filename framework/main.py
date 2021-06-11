@@ -55,4 +55,4 @@ class Application:
         # start view
         code, body = view(request)
         start_response(code, [('Content-Type', 'text/html')])
-        return body
+        return [body.encode('utf-8')]
