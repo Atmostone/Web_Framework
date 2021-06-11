@@ -4,13 +4,16 @@ import pathlib
 from framework.templater import render
 
 
-class IndexView:
-    def __call__(self, request):
-        path = os.path.join(pathlib.Path(__file__).parent.absolute(), 'templates/index.html')
-        return '200 OK', [render(path).encode('utf-8')]
+class TemplatePath:
+    def __init__(self):
+        self.path = os.path.join(pathlib.Path(__file__).parent.absolute(), 'templates')
 
 
-class AboutView:
+class IndexView(TemplatePath):
     def __call__(self, request):
-        path = os.path.join(pathlib.Path(__file__).parent.absolute(), 'templates/about.html')
-        return '200 OK', [render(path).encode('utf-8')]
+        return '200 OK', render('index.html', folder=self.path)
+
+
+class AboutView(TemplatePath):
+    def __call__(self, request):
+        return '200 OK', render('about.html', folder=self.path)
